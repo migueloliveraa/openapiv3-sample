@@ -1,12 +1,24 @@
+buildscript {
+	ext {
+		springBootVersion = "2.7.3"
+		springCloudVersion = "2021.0.3"
+		springDocVersion = "1.6.11"
+	}
+}
+
 plugins {
+	id 'org.springframework.boot' version "$springBootVersion"
+	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "jacoco"
 }
 
 group = 'com.openapi.sample'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+version = '1.0.0'
+compileJava {
+	sourceCompatibility = 17
+	targetCompatibility = 17
+}
 
 configurations {
 	compileOnly {
@@ -18,11 +30,24 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// API Documentation. Open API v3
+	implementation "org.springdoc:springdoc-openapi-ui:$springDocVersion"
+
+	//Utils
+	implementation 'org.apache.commons:commons-collections4'
 }
 
 tasks.named('test') {

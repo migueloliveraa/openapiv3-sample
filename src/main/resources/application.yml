@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: openapiv3-sample
+---
+server:
+  port: ${PORT:8088}
