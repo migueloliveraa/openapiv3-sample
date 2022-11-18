@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PersonController {
 
-    @Operation(summary = "Get a person by id")
+    @Operation(summary = "Get a person by id 1")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the person",
                     content = { @Content(schema = @Schema(implementation = Person.class)) })
@@ -30,5 +30,15 @@ public class PersonController {
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
 
-
+    @Operation(summary = "Get a person by id 2")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the person",
+                    content = { @Content(schema = @Schema(implementation = Person.class)) })
+    })
+    @GetMapping(value = "person2/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> getPersonbyId2(@PathVariable Long id) {
+        log.info("getPersonbyId: {}", id);
+        var person = Person.builder().firstName("Bob").lastName("Lassar").id(id).build();
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
 }
